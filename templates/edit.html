@@ -1,29 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Company</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h2>Edit Company</h2>
+{% block title %}
+Edit Student
+{% endblock %}
+
+{% block content %}
+
+<h2>Edit Student</h2>
 
 <form method="POST">
 
-Company Name<br>
-<input type="text" name="company_name" value="{{ company.company_name }}"><br><br>
+Full Name<br>
+<input type="text" name="fullname" value="{{ student.fullname }}"><br><br>
 
-Job Role<br>
-<input type="text" name="job_role" value="{{ company.job_role }}"><br><br>
+Email<br>
+<input type="email" name="email" value="{{ student.email }}"><br><br>
 
-Package<br>
-<input type="text" name="package" value="{{ company.package }}"><br><br>
+Phone<br>
+<input type="text" name="phone" value="{{ student.phone }}"><br><br>
 
-Eligibility<br>
-<input type="text" name="eligibility" value="{{ company.eligibility }}"><br><br>
+Department<br>
+<input type="text" name="department" value="{{ student.department }}"><br><br>
 
-<input type="submit" value="Update Company">
+<input type="submit" value="Update Student">
 
 </form>
 
-</body>
-</html>
+{% endblock %}
