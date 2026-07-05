@@ -1,37 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Applications</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<h2>Student Applications</h2>
-<p>Total Applications: {{ applications|length }}</p>
+{% block title %}Applications{% endblock %}
 
-<table border="1">
+{% block content %}
 
-<tr>
-    <th>ID</th>
-    <th>Student Name</th>
-    <th>Company Name</th>
-    <th>Status</th>
-    <th>Action</th>
-</tr>
+<div class="container mt-5">
 
-{% for app in applications %}
-<tr>
-    <td>{{ app.id }}</td>
-    <td>{{ app.student.fullname }}</td>
-    <td>{{ app.company.company_name }}</td>
-    <td>{{ app.status }}</td>
-    <td>
-        <a href="/approve/{{ app.id }}">Approve</a> |
-        <a href="/reject/{{ app.id }}">Reject</a>
-    </td>
-</tr>
-{% endfor %}
+    <h2 class="text-center text-primary mb-4">
+        Student Applications
+    </h2>
 
-</table>
+    <h5>Total Applications: {{ applications|length }}</h5>
 
-</body>
-</html>
+    <table class="table table-bordered table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for app in applications %}
+        <tr>
+            <td>{{ app.id }}</td>
+            <td>{{ app.student.fullname }}</td>
+            <td>{{ app.company.company_name }}</td>
+
+            <td>
+                {% if app.status == "Approved" %}
+                    <span class="badge bg-success">Approved</span>
+                {% elif app.status == "Rejected" %}
+                    <span class="badge bg-danger">Rejected</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                {% endif %}
+            </td>
+
+            <td>
+                <a href="/approve/{{ app.id }}" class="btn btn-success btn-sm">Approve</a>
+
+                <a href="/reject/{{ app.id }}" class="btn btn-danger btn-sm">Reject</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+    <a href="/admin" class="btn btn-primary">Back to Admin</a>
+
+</div>
+
+{% endblock %}
