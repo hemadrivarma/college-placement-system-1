@@ -135,12 +135,31 @@ def profile():
 
     return render_template("profile.html", student=student)
 
-    
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        if username == "admin" and password == "admin123":
+            session["admin"] = True
+            return redirect("/admin")
+
+        flash("Invalid Admin Login!", "danger")
+
+    return render_template("admin_login.html")    
+
 @app.route('/admin')
 def admin():
 
     if "admin" not in session:
         return redirect("/admin_login")
+@app.route('/admin_logout')
+def admin_logout():
+    session.pop("admin", None)
+    return redirect("/admin_login")        
 
     students = Student.query.all()
     return render_template("admin.html", students=students)
