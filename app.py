@@ -135,6 +135,27 @@ def profile():
 
     return render_template("profile.html", student=student)
 
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile():
+
+    if 'student_id' not in session:
+        return redirect('/login')
+
+    student = Student.query.get(session['student_id'])
+
+    if request.method == 'POST':
+        student.fullname = request.form['fullname']
+        student.email = request.form['email']
+        student.phone = request.form['phone']
+        student.department = request.form['department']
+        student.cgpa = float(request.form['cgpa'])
+
+        db.session.commit()
+        flash("Profile updated successfully!", "success")
+        return redirect('/profile')
+
+    return render_template("edit_profile.html", student=student)     
+
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
 
