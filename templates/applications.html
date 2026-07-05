@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Applications</title>
+</head>
+<body>
+
+<h2>Student Applications</h2>
+<p>Total Applications: {{ applications|length }}</p>
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Student Name</th>
+    <th>Company Name</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+{% for app in applications %}
+<tr>
+    <td>{{ app.id }}</td>
+    <td>{{ app.student.fullname }}</td>
+    <td>{{ app.company.company_name }}</td>
+    <td>{{ app.status }}</td>
+    <td>
+        <a href="/approve/{{ app.id }}">Approve</a> |
+        <a href="/reject/{{ app.id }}">Reject</a>
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+</body>
+</html>

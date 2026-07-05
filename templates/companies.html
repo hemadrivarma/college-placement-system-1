@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company List</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Company List</h3>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>Job Role</th>
+                        <th>Package (LPA)</th>
+                        <th>Eligibility (CGPA)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for company in companies %}
+
+                <tr>
+                    <td>{{ company.id }}</td>
+                    <td>{{ company.company_name }}</td>
+                    <td>{{ company.job_role }}</td>
+                    <td>{{ company.package }}</td>
+                    <td>{{ company.eligibility }}</td>
+
+                    <td>
+                        <a href="/edit_company/{{ company.id }}" class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="/delete_company/{{ company.id }}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this company?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <a href="/company" class="btn btn-success">
+                Add New Company
+            </a>
+
+            <a href="/admin" class="btn btn-secondary">
+                Back to Admin
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

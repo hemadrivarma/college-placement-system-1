@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Company</title>
+</head>
+<body>
+
+<h2>Edit Company</h2>
+
+<form method="POST">
+
+Company Name<br>
+<input type="text" name="company_name" value="{{ company.company_name }}"><br><br>
+
+Job Role<br>
+<input type="text" name="job_role" value="{{ company.job_role }}"><br><br>
+
+Package<br>
+<input type="text" name="package" value="{{ company.package }}"><br><br>
+
+Eligibility<br>
+<input type="text" name="eligibility" value="{{ company.eligibility }}"><br><br>
+
+<input type="submit" value="Update Company">
+
+</form>
+
+</body>
+</html>

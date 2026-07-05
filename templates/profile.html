@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+<h3>My Profile</h3>
+</div>
+
+<div class="card-body">
+
+<table class="table">
+
+<tr>
+<th>Full Name</th>
+<td>{{ student.fullname }}</td>
+</tr>
+
+<tr>
+<th>Email</th>
+<td>{{ student.email }}</td>
+</tr>
+
+<tr>
+<th>Phone</th>
+<td>{{ student.phone }}</td>
+</tr>
+
+<tr>
+<th>Department</th>
+<td>{{ student.department }}</td>
+</tr>
+
+</table>
+
+<a href="/dashboard" class="btn btn-primary">
+Back to Dashboard
+</a>
+<a href="/edit_profile" class="btn btn-warning">Edit Profile</a>
+<a href="/change_password" class="btn btn-danger">Change Password</a>
+
+</div>
+</div>
+</div>
+
+{% endblock %}
