@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Company{% endblock %}
+
+{% block content %}
+
+<h2>Edit Company</h2>
+
+<form method="POST">
+
+<label>Company Name</label><br>
+<input type="text" name="company_name" value="{{ company.company_name }}"><br><br>
+
+<label>Job Role</label><br>
+<input type="text" name="job_role" value="{{ company.job_role }}"><br><br>
+
+<label>Package</label><br>
+<input type="text" name="package" value="{{ company.package }}"><br><br>
+
+<label>Eligibility</label><br>
+<input type="text" name="eligibility" value="{{ company.eligibility }}"><br><br>
+
+<input type="submit" value="Update Company">
+
+</form>
+
+{% endblock %}
