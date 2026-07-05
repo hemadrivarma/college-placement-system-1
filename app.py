@@ -156,6 +156,9 @@ def admin():
 
     if "admin" not in session:
         return redirect("/admin_login")
+        students = student.query.all()
+        return
+        render_template("admin.html",students=students)
 @app.route('/admin_logout')
 def admin_logout():
     session.pop("admin", None)
