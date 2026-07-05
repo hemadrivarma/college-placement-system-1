@@ -153,19 +153,17 @@ def admin_login():
 
 @app.route('/admin')
 def admin():
-
     if "admin" not in session:
         return redirect("/admin_login")
-        students = student.query.all()
-        return
-        render_template("admin.html",students=students)
-@app.route('/admin_logout')
-def admin_logout():
-    session.pop("admin", None)
-    return redirect("/admin_login")        
 
     students = Student.query.all()
     return render_template("admin.html", students=students)
+
+
+@app.route('/admin_logout')
+def admin_logout():
+    session.pop("admin", None)
+    return redirect("/admin_login")
 
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
