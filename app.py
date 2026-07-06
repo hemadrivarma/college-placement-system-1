@@ -1,3 +1,7 @@
+import os
+from werkzeug.utils import secure_filename
+UPLOAD_FOLDER = "static/resumes"
+app.config["UPLOAD_FOLDER"]=UPLOAD_FOLDER
 from flask import Flask, render_template, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -18,6 +22,7 @@ class Student(db.Model):
     department = db.Column(db.String(50))
     cgpa=db.Column(db.Float)
     password = db.Column(db.String(100))
+    resume=db.Column(db.String(200))
 
 class Company(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -414,6 +419,34 @@ def change_password():
         return redirect("/logout")
 
     return render_template("change_password.html")
+
+@app.route('/upload_resume', methods=['GET', 'POST'])
+def upload_resume():
+
+    if 'student_id' not in session:
+        return redirect('/login')
+
+    student = Student.query.get(session['student_id'])
+
+    if request.method == 'POST':
+
+        file = request.files['resume']
+
+        if file:
+
+            filename = secure_filename(file.filename)
+
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            student.resume = filename
+
+            db.session.commit()
+
+            flash("Resume uploaded successfully!", "success")
+
+            return redirect('/profile')
+
+    return render_template("upload_resume.html")    
 
                   
 

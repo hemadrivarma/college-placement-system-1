@@ -32,12 +32,26 @@
 <td>{{ student.department }}</td>
 </tr>
 
+<tr>
+    <th>Resume</th>
+    <td>
+        {% if student.resume %}
+            <span class="text-success">✅ Uploaded</span>
+        {% else %}
+            <span class="text-danger">❌ Not Uploaded</span>
+        {% endif %}
+    </td>
+</tr>
+
 </table>
 
 <a href="/dashboard" class="btn btn-primary">
 Back to Dashboard
 </a>
 <a href="/edit_profile" class="btn btn-warning">Edit Profile</a>
+<a href="/upload_resume" class="btn btn-info">
+    Upload Resume
+</a>
 <a href="/change_password" class="btn btn-danger">Change Password</a>
 
 </div>
