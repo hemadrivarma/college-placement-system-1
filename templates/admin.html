@@ -59,7 +59,7 @@ Admin Panel
     });
     </script>
 
-    <!-- Students Card -->
+    <!-- Students -->
     <div class="card shadow">
 
         <div class="card-header bg-danger text-white">
@@ -68,7 +68,7 @@ Admin Panel
 
         <div class="card-body">
 
-            <!-- Statistics Cards -->
+            <!-- Statistics -->
             <div class="row mb-4">
 
                 <div class="col-md-3">
@@ -114,76 +114,76 @@ Admin Panel
 
                 <div class="col-md-8">
                     <form method="GET" action="/admin" class="d-flex">
-                        <input type="text"
-                               name="search"
-                               class="form-control me-2"
-                               placeholder="Search by Name, Email or Department">
+                        <input
+                            type="text"
+                            name="search"
+                            class="form-control me-2"
+                            placeholder="Search by Name, Email or Department">
                         <button class="btn btn-primary">Search</button>
                     </form>
                 </div>
 
                 <div class="col-md-2">
-                    <a href="/admin" class="btn btn-secondary">
-                        Reset
-                    </a>
+                    <a href="/admin" class="btn btn-secondary">Reset</a>
                 </div>
 
             </div>
 
             <!-- Students Table -->
+
             <table class="table table-bordered table-striped table-hover">
 
                 <thead class="table-dark">
+
                     <tr>
                         <th>ID</th>
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Department</th>
-                        <th>resume</th>
+                        <th>Resume</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
 
                 <tbody>
 
                 {% for student in students %}
 
-                <tr>
+                    <tr>
 
-                    <td>{{ student.id }}</td>
-                    <td>{{ student.fullname }}</td>
-                    <td>{{ student.email }}</td>
-                    <td>{{ student.phone }}</td>
-                    <td>{{ student.department }}</td>
-                    <th>Resume</th>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.fullname }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.phone }}</td>
+                        <td>{{ student.department }}</td>
 
-                    <td>
-                      {% if student.resume %}
-                      <a href="{{ url_for('static', filename='resumes/' + student.resume) }}"
-                        target="_blank"
-                        class="btn btn-info btn-sm">
-                        View Resume
-                        </a>
-                        {% else %}
-                        <span class="text-danger">No Resume</span>
-                        {% endif %}
-                    </td>
+                        <td>
+                            {% if student.resume %}
+                                <a href="{{ url_for('static', filename='resumes/' + student.resume) }}"
+                                   target="_blank"
+                                   class="btn btn-info btn-sm">
+                                    View Resume
+                                </a>
+                            {% else %}
+                                <span class="text-danger">No Resume</span>
+                            {% endif %}
+                        </td>
 
-                    <td>
-                     <a href="/edit/{{ student.id }}" class="btn btn-warning btn-sm">
-                     Edit
-                    </a>
+                        <td>
+                            <a href="/edit/{{ student.id }}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
 
-                    <a href="/delete/{{ student.id }}"
-                      class="btn btn-danger btn-sm"
-                     onclick="return confirm('Delete this student?')">
-                     Delete
-                     </a>
-                    </td>
+                            <a href="/delete/{{ student.id }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Delete this student?')">
+                                Delete
+                            </a>
+                        </td>
 
-
-                </tr>
+                    </tr>
 
                 {% endfor %}
 
