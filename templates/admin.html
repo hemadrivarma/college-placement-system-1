@@ -20,6 +20,50 @@ Login
 <div class="card shadow">
 
 <div class="card-header bg-danger text-white">
+
+<div class="card mt-4 shadow">
+    <div class="card-header bg-dark text-white">
+        <h4>Placement Statistics</h4>
+    </div>
+
+    <div class="card-body">
+        <canvas id="placementChart"></canvas>
+    </div>
+</div>
+
+<script>
+const ctx = document.getElementById('placementChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Students', 'Companies', 'Applications', 'Selected'],
+        datasets: [{
+            label: 'College Placement Data',
+            data: [
+                {{ total_students }},
+                {{ total_companies }},
+                {{ total_applications }},
+                {{ selected_students }}
+            ],
+            backgroundColor: [
+                '#0d6efd',
+                '#198754',
+                '#ffc107',
+                '#dc3545'
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+</script>    
 <h2>Registered Students</h2>
 </div>
 <div class="row mb-4">
