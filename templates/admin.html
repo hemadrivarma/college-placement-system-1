@@ -156,17 +156,18 @@ Admin Panel
                     <td>{{ student.email }}</td>
                     <td>{{ student.phone }}</td>
                     <td>{{ student.department }}</td>
+                    <th>Resume</th>
 
                     <td>
                       {% if student.resume %}
                       <a href="{{ url_for('static', filename='resumes/' + student.resume) }}"
                         target="_blank"
-                     class="btn btn-info btn-sm">
-                      View Resume
-                      </a>
-                      {% else %}
-                      <span class="text-danger">No Resume</span>
-                      {% endif %}
+                        class="btn btn-info btn-sm">
+                        View Resume
+                        </a>
+                        {% else %}
+                        <span class="text-danger">No Resume</span>
+                        {% endif %}
                     </td>
 
                     <td>
