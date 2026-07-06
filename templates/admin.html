@@ -1,192 +1,200 @@
 {% extends "base.html" %}
 
 {% block title %}
-Login
+Admin Panel
 {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Panel</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light">
 
 <div class="container mt-5">
 
-<div class="card shadow">
+    <!-- Placement Statistics -->
+    <div class="card shadow mb-4">
 
-<div class="card-header bg-danger text-white">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Placement Statistics</h4>
+        </div>
 
-<div class="card mt-4 shadow">
-    <div class="card-header bg-dark text-white">
-        <h4>Placement Statistics</h4>
+        <div class="card-body">
+            <canvas id="placementChart" height="100"></canvas>
+        </div>
+
     </div>
 
-    <div class="card-body">
-        <canvas id="placementChart"></canvas>
-    </div>
-</div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
 
-<script>
-const ctx = document.getElementById('placementChart');
+        const ctx = document.getElementById("placementChart");
 
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Students', 'Companies', 'Applications', 'Selected'],
-        datasets: [{
-            label: 'College Placement Data',
-            data: [
-                {{ total_students }},
-                {{ total_companies }},
-                {{ total_applications }},
-                {{ selected_students }}
-            ],
-            backgroundColor: [
-                '#0d6efd',
-                '#198754',
-                '#ffc107',
-                '#dc3545'
-            ]
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["Students", "Companies", "Applications", "Selected"],
+                datasets: [{
+                    label: "Placement Statistics",
+                    data: [
+                        {{ total_students }},
+                        {{ total_companies }},
+                        {{ total_applications }},
+                        {{ selected_students }}
+                    ],
+                    backgroundColor: [
+                        "#0d6efd",
+                        "#198754",
+                        "#ffc107",
+                        "#dc3545"
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-        }
-    }
-});
-</script>    
-<h2>Registered Students</h2>
-</div>
-<div class="row mb-4">
+        });
 
-    <div class="col-md-3">
-        <div class="card bg-primary text-white shadow">
-            <div class="card-body text-center">
-                <h5>Total Students</h5>
-                <h2>{{ total_students }}</h2>
-            </div>
+    });
+    </script>
+
+    <!-- Students Card -->
+    <div class="card shadow">
+
+        <div class="card-header bg-danger text-white">
+            <h2>Registered Students</h2>
         </div>
-    </div>
 
-    <div class="col-md-3">
-        <div class="card bg-success text-white shadow">
-            <div class="card-body text-center">
-                <h5>Total Companies</h5>
-                <h2>{{ total_companies }}</h2>
+        <div class="card-body">
+
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center">
+                            <h5>Total Students</h5>
+                            <h2>{{ total_students }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body text-center">
+                            <h5>Total Companies</h5>
+                            <h2>{{ total_companies }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card bg-warning text-dark">
+                        <div class="card-body text-center">
+                            <h5>Applications</h5>
+                            <h2>{{ total_applications }}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body text-center">
+                            <h5>Selected</h5>
+                            <h2>{{ selected_students }}</h2>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
 
-    <div class="col-md-3">
-        <div class="card bg-warning text-dark shadow">
-            <div class="card-body text-center">
-                <h5>Applications</h5>
-                <h2>{{ total_applications }}</h2>
+            <!-- Search -->
+            <div class="row mb-3">
+
+                <div class="col-md-8">
+                    <form method="GET" action="/admin" class="d-flex">
+                        <input type="text"
+                               name="search"
+                               class="form-control me-2"
+                               placeholder="Search by Name, Email or Department">
+                        <button class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+
+                <div class="col-md-2">
+                    <a href="/admin" class="btn btn-secondary">
+                        Reset
+                    </a>
+                </div>
+
             </div>
+
+            <!-- Students Table -->
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.fullname }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.phone }}</td>
+                    <td>{{ student.department }}</td>
+
+                    <td>
+
+                        <a href="/edit/{{ student.id }}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="/delete/{{ student.id }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this student?')">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <a href="/applications" class="btn btn-success">
+                View Applications
+            </a>
+
+            <a href="/companies" class="btn btn-primary">
+                Manage Companies
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                Back to Home
+            </a>
+
         </div>
-    </div>
 
-    <div class="col-md-3">
-        <div class="card bg-danger text-white shadow">
-            <div class="card-body text-center">
-                <h5>Selected</h5>
-                <h2>{{ selected_students }}</h2>
-            </div>
-        </div>
     </div>
 
 </div>
 
-<div class="card-body">
-
-<div class="row mb-3">
-    <div class="col-md-8">
-        <form method="GET" action="/admin" class="d-flex">
-            <input type="text"
-                   name="search"
-                   class="form-control me-2"
-                   placeholder="Search by Name, Email or Department">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-    </div>
-
-    <div class="col-md-2">
-        <a href="/admin" class="btn btn-secondary">
-            Reset
-        </a>
-    </div>
-</div>    
-
-<table class="table table-bordered table-hover table-striped">
-
-<thead class="table-dark">
-
-<tr>
-<th>ID</th>
-<th>Full Name</th>
-<th>Email</th>
-<th>Phone</th>
-<th>Department</th>
-<th>Action</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-
-{% for student in students %}
-
-<tr>
-
-<td>{{ student.id }}</td>
-<td>{{ student.fullname }}</td>
-<td>{{ student.email }}</td>
-<td>{{ student.phone }}</td>
-<td>{{ student.department }}</td>
-<td>
-    <a href="/edit/{{ student.id }}" class="btn btn-warning btn-sm">
-        Edit
-    </a>
-
-    <a href="/delete/{{ student.id }}"
-       class="btn btn-danger btn-sm"
-       onclick="return confirm('Are you sure you want to delete this student?')">
-        Delete
-    </a>
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-<a href="/applications" class="btn btn-success">
-    View Applications
-</a>
-<a href="/companies" class="btn btn-primary">Manage Companies</a>
-<a href="/" class ="btn btn-secondary">
-Back to Home
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
 {% endblock %}
