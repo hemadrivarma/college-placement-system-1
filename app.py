@@ -281,9 +281,23 @@ def company():
 @app.route('/companies')
 def companies():
 
-    companies = Company.query.all()
+    if 'admin' not in session:
+        return redirect('/admin_login')
 
-    return render_template("companies.html", companies=companies)
+    search = request.args.get('search')
+
+    if search:
+        companies = Company.query.filter(
+            (Company.company_name.ilike(f"%{search}%")) |
+            (Company.job_role.ilike(f"%{search}%"))
+        ).all()
+    else:
+        companies = Company.query.all()
+
+    return render_template(
+        "companies.html",
+        companies=companies
+    )
 
 @app.route('/apply/<int:company_id>')
 def apply(company_id):
