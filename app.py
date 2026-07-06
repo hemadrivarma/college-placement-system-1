@@ -175,10 +175,19 @@ def admin_login():
 @app.route('/admin')
 def admin():
 
-    if "admin" not in session:
-        return redirect("/admin_login")
+    if 'admin' not in session:
+        return redirect('/admin_login')
 
-    students = Student.query.all()
+    search = request.args.get('search')
+
+    if search:
+        students = Student.query.filter(
+            (Student.fullname.ilike(f"%{search}%")) |
+            (Student.email.ilike(f"%{search}%")) |
+            (Student.department.ilike(f"%{search}%"))
+        ).all()
+    else:
+        students = Student.query.all()
 
     total_students = Student.query.count()
     total_companies = Company.query.count()
