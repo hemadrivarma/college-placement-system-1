@@ -140,6 +140,7 @@ Admin Panel
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Department</th>
+                        <th>resume</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -157,19 +158,29 @@ Admin Panel
                     <td>{{ student.department }}</td>
 
                     <td>
-
-                        <a href="/edit/{{ student.id }}"
-                           class="btn btn-warning btn-sm">
-                            Edit
-                        </a>
-
-                        <a href="/delete/{{ student.id }}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Delete this student?')">
-                            Delete
-                        </a>
-
+                      {% if student.resume %}
+                      <a href="{{ url_for('static', filename='resumes/' + student.resume) }}"
+                        target="_blank"
+                     class="btn btn-info btn-sm">
+                      View Resume
+                      </a>
+                      {% else %}
+                      <span class="text-danger">No Resume</span>
+                      {% endif %}
                     </td>
+
+                    <td>
+                     <a href="/edit/{{ student.id }}" class="btn btn-warning btn-sm">
+                     Edit
+                    </a>
+
+                    <a href="/delete/{{ student.id }}"
+                      class="btn btn-danger btn-sm"
+                     onclick="return confirm('Delete this student?')">
+                     Delete
+                     </a>
+                    </td>
+
 
                 </tr>
 

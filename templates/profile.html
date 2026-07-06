@@ -36,7 +36,13 @@
     <th>Resume</th>
     <td>
         {% if student.resume %}
-            <span class="text-success">✅ Uploaded</span>
+            <span class="text-success">✅ Uploaded</span><br><br>
+
+            <a href="{{ url_for('static', filename='resumes/' + student.resume) }}"
+               target="_blank"
+               class="btn btn-primary btn-sm">
+                View Resume
+            </a>
         {% else %}
             <span class="text-danger">❌ Not Uploaded</span>
         {% endif %}
